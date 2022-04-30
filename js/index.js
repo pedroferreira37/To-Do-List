@@ -1,80 +1,92 @@
-/* eslint-disable */
-const input = document.querySelector('.input');
-const ulContent = document.querySelector('.li');
-
-// Objects to work
-let data = {};
-const makeWork = document.createElement('ul');
-const ulElement = ulContent.appendChild(makeWork);
-
-
-
-// Set display values
-
-function saveValues(value, id) {
-  const arr = [...value.children];
-
-  for (let i = 0; i < arr.length; i++) {
-    id.setAttribute('id', `${i}`);
-    localStorage[arr[i].id] = arr[i].innerHTML;
+class TO_DO {
+  constructor(input, list) {
+        this.input = document.querySelector(input);
+        this.list = document.querySelector(list);
+        
+        this.displayInputValues = this.displayInputValues.bind(this);
+        
+        // id count to store in localstorage
+        this.id = 0;
+    
   }
-}
 
-function setValues(setItem) {
-  localStorage.removeItem('');
-  const properties = Object.keys(localStorage).sort();
 
-  for (let i = 0; i < properties.length; i++) {
-    const li = document.createElement('li');
-    li.innerHTML = localStorage[properties[i]];
+  // function that triggers to do actions
+  displayInputValues(event) {
+      const { value } = event.target
+        if (event.key === "Enter") {
+            const box = this.createItem("div",  value);
 
-    const arr = [...li.children];
-    function remove() {
-      localStorage.removeItem(properties[i]);
-      this.parentNode.remove();
-    }
-    arr.forEach((item) => {
-      item.addEventListener('click', remove);
-    });
+            box.dataset.id = this.id
+            this.appendItem(box, this.list);
+          
+            this.storeLocalStorage(this.id++, box.outerHTML);
 
-    setItem.appendChild(li);
+            box.addEventListener('click', this.removeItem);
+        }
+    
   }
-}
 
-// Get values and display than
 
-function doSomething(event) {
-  const key = event.wich || event.keyCode;
-  if (event.target.value === '') {
-    undefined;
-  } else {
-    if (key === 13) {
-      data.element = event.target.value;
-      const li = document.createElement('li');
-      const span = document.createElement('button');
-      li.innerHTML += `${data.element}`;
-      li.appendChild(span);
-      ulElement.appendChild(li);
-      function remove() {
-        this.parentNode.remove();
+  // function to create itens 
+  createItem(wrapper,  content) {
+    const box = document.createElement(wrapper);
+    box.innerHTML = content;
+
+    return box; 
+  }
+
+  // function to remove  itens 
+  removeItem() {
+    
+    localStorage.removeItem(this.dataset.id)
+    this.remove();
+   
+  }
+
+  
+  // function to dispay  itens  
+  appendItem(item, node) {
+    node.append(item);
+  }
+
+  // function to store items on local storage
+  storeLocalStorage(id, item) {
+    localStorage.setItem(id, item);
+  }
+
+
+  // event listeners
+  eventListeners() {
+    this.input.addEventListener("keypress", this.displayInputValues);
+  }
+
+
+  // function to get items from local storage
+  getLocalStorageItems() {
+    for(let key in localStorage) {
+      if(localStorage.hasOwnProperty(key)) {
+
+          const localBox = this.createItem('div', localStorage[key] );
+         
+          localBox.dataset.id = key;
+          
+          this.appendItem(localBox, this.list);
+
+          localBox.addEventListener('click', this.removeItem);
       }
-      span.addEventListener('click', remove);
-      saveValues(ulElement, li);
-      reset(data);
-      event.target.value = '';
-      return li;
+    }
+  } 
+
+  init() {
+    this.eventListeners();
+
+    if(localStorage.length) {
+        this.getLocalStorageItems();
     }
   }
 }
 
-window.onload = function () {
-  setValues(ulElement);
-};
-// Reset object
+const todo = new TO_DO("input", ".list");
 
-function reset(object) {
-  object = {};
-  return object;
-}
-
-input.addEventListener('keyup', doSomething);
+todo.init();

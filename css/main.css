@@ -1,100 +1,94 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background: linear-gradient(250.67deg, #3A95FF 61.95%, #7EB2EF 96.15%, rgba(58, 149, 255, 0.7) 96.15%) ;
-    height: 100%;
-    margin: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-color: #fff;
+    overflow: hidden;
 }
 
-.grid {
-    display: grid;
-    
-
-}
-
-.to,.do {
-    color: white;
-    
-    
-    
-    
-}
-
-
-.do {
+h2 {
     text-align: center;
-    font-size: 60px;
-    
+    color: #24a0ed;
 }
 
+.container {
+    width: 400px;
+    margin: 15rem auto;
+}
 
-.input {
-    border: none;
-    outline: none;
-    width: 540px;
-    height: 50px;
-    border-bottom: 1px solid #3333;
-    margin: 0 auto;
+input {
+    width: 400px;
+    height: 3rem;
+    margin-bottom: 2rem;
     border-radius: 5px;
-    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
-    
-    
-    
-}
-
-
-
-
-
-
-ul {
-    margin-left: -60px;
-}
-
-ul li{
-   
-    list-style: none;
-    color: white;
-    font-size: 26px;
-    font-family: Arial, Helvetica, sans-serif;
-    transition: .5s linear;
-    
-    
-    
-}
-
-ul li::after {
-    content: '';
-    width: 540px;
-    height: 1px;
-    background: white;
-    display: block;
-    margin: 20px auto;
-}
-
-.li {
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-button {
-    width: 20px;
-    height: 20px;
-    margin-left: 20px;
-    background: url("../img/Group\ 4.png") no-repeat center;
-    border: none;
+    border: 1px solid rgb(206, 206, 206);
     outline: none;
-    cursor: pointer;
+    color: #24a0ed;
+    padding-left: 0.5rem;
 }
 
+.list {
+    max-width: 100%;
+    max-height: 100%;
+    width: 80rem;
+    height: 30rem;
+    
+}
+
+.list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.list > div {
+    color: #24a0ed;
+    font-size: 1.275rem;
+    margin-bottom: 0.875rem;
+    display: flex;
+    border-bottom: 1px solid rgb(206, 206, 206);
+    padding-bottom: 0.875rem;
+    animation: myanimation 0.5s;
+    
+}
+
+.list > div::after {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid rgb(206, 206, 206);
+    justify-content: center;
+    align-items: center;
+    margin-left: calc(400px - 20px);
+    position: absolute;
+    cursor: pointer;
+    transition: 0.5s;
 
 
+}
 
+.list > div:hover:after {
+    
+    background-color: #24a0ed;
+    border: 2px solid #fff;
+    box-shadow: 0 0  3px #24a0ed;
+}
 
+input:focus {
+    border-color: #24a0ed;
+    transition: .5s;
+    box-shadow: 0 0  10px #24a0ed;
+    
+}
 
-
-
-
-
-
-
+@keyframes myanimation {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    } 
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
