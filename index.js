@@ -6,8 +6,21 @@ class TO_DO {
         this.displayInputValues = this.displayInputValues.bind(this);
         
         // id count to store in localstorage
-        this.id = 0;
-    
+        if(localStorage.length) {
+        let maxID = [];
+
+                for(let key in localStorage) {
+                      if(localStorage.hasOwnProperty(key))  {
+                        maxID.push(key)
+                      }
+                  
+                }
+
+        this.id = Math.max(...maxID) + 1
+        } else {
+            this.id = 0;
+        }
+        
   }
 
 
@@ -19,12 +32,18 @@ class TO_DO {
 
             box.dataset.id = this.id
             this.appendItem(box, this.list);
+            
+            this.clearInput('')
           
             this.storeLocalStorage(this.id++, box.outerHTML);
 
             box.addEventListener('click', this.removeItem);
         }
     
+  }
+
+  clearInput(clear) {
+    this.input.value = clear
   }
 
 
