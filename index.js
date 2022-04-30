@@ -32,7 +32,7 @@ class TO_DO {
 
             box.dataset.id = this.id
             this.appendItem(box, this.list);
-            
+
             this.clearInput('')
           
             this.storeLocalStorage(this.id++, box.outerHTML);
